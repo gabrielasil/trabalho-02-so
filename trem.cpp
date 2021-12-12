@@ -6,12 +6,21 @@ Trem::Trem(int ID, int x, int y){
     this->ID = ID;
     this->x = x;
     this->y = y;
-    velocidade = 50;
+    velocidade = 200;
+}
+
+void Trem::changeSpeed(int x){
+    this->velocidade = x;
 }
 
 //Função a ser executada após executar trem->START
 void Trem::run(){
     while(true){
+        if(velocidade == 200){
+            while(velocidade == 200){
+                msleep(1);
+            }
+        }
         switch(ID){
         case 1://Trem 1
             if (y == 30 && x <330){//se o Trem 1 estivre na aresta de cima

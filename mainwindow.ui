@@ -78,32 +78,6 @@
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>370</y>
-      <width>99</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ligar</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>370</y>
-      <width>98</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Parar</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_trilho4_2">
     <property name="geometry">
      <rect>
@@ -360,7 +334,7 @@
      <string>T3</string>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider">
+   <widget class="QSlider" name="horizontalSlider_1">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -371,6 +345,9 @@
     </property>
     <property name="styleSheet">
      <string notr="true">background: rgb(255, 110, 61)</string>
+    </property>
+    <property name="maximum">
+     <number>200</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -388,6 +365,9 @@
     <property name="styleSheet">
      <string notr="true">background: rgb(67, 101, 255)</string>
     </property>
+    <property name="maximum">
+     <number>200</number>
+    </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
@@ -403,6 +383,9 @@
     </property>
     <property name="styleSheet">
      <string notr="true">background: rgb(255, 43, 47)</string>
+    </property>
+    <property name="maximum">
+     <number>200</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -420,6 +403,9 @@
     <property name="styleSheet">
      <string notr="true">background: rgb(12, 131, 50)</string>
     </property>
+    <property name="maximum">
+     <number>200</number>
+    </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
@@ -435,6 +421,9 @@
     </property>
     <property name="styleSheet">
      <string notr="true">background: rgb(255, 94, 156)</string>
+    </property>
+    <property name="maximum">
+     <number>200</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
