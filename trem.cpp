@@ -28,7 +28,7 @@ void Trem::run(){
             if (y == 30 && x <330){//se o Trem 1 estivre na aresta de cima
 
                 if(x+10 == 330){//entrada na regiao critica 1, testa o mutex q
-                    regiao[0].acquire(1);//trava a regiao 1
+                    //regiao[0].acquire(1);//trava a regiao 1
                     //testa se pode avancar
                     //se puder entao avanca
                     x+=10;
@@ -37,17 +37,21 @@ void Trem::run(){
                 else x+=10;//enquanto nao chega na regiao critica avanca para a direita
             }
 
-            else if (x == 330 && y < 150){//se o Trem 1 estiver na regiao critica 2
+            else if (x == 330 && y < 150){//se o Trem 1 estiver na regiao critica 1
+
                 if(y+10 == 150){//entrada na regiao critica 3, testa o mutex
 
                     //testa se pode avancar
                     //se puder avanca
-                    y+=10;
+                    y+=10;//entra na regiao critica 3
                     //se nao puder fica parado
                 }
                 else y+=10;//enquanto nao chega na regiao critica avanca para baixo
             }
-            else if (x > 60 && y == 150){//se o trem 1 estiver na aresta de baixo
+            else if (x > 60 && y == 150){//se o trem 1 estiver na regiao critica 3
+                if(x == 320){
+                    //regiao[0].release(1);
+                }
                 x-=10;
             }
             else //se o Trem 1 estiver na aresta da esquerda
@@ -56,7 +60,13 @@ void Trem::run(){
             break;
         case 2://Trem 2
             if (y == 30 && x <600){//se o Trem 2 estiver prestes a aresta de cima
-                if(x+10 == 600){//entrada na regiao critica 2, testa o mutex
+
+                if(x==340){
+                    //regiao[0].release(1);//libera a regiao critica 1
+                    x+=10;//avanca
+                }
+
+                else if(x+10 == 600){//entrada na regiao critica 2, testa o mutex
                     //testa se pode avancar
                     //se puder avanca
                     x+=10;
@@ -81,7 +91,7 @@ void Trem::run(){
                     //senao fica parado
                 }
                 else if(x-10 == 330){//entrando na regiao critica 1, testa o mutex
-                    regiao[0].acquire(1);//trava a regiao 1
+                    //regiao[0].acquire(1);//trava a regiao 1
                     //testa se pode avancar
                     //se puder avanca
                     x-=10;
@@ -91,7 +101,7 @@ void Trem::run(){
                 else x-=10;//enquanto nao chegar na regiao critica avanca para a esquerda
 
             }
-            else//se o Trem 2 estiver na aresta da esquerda
+            else//se o Trem 2 estiver na regiao critica 1
                y-=10;
             emit updateGUI(ID, x,y);    //Emite um sinal
             break;
