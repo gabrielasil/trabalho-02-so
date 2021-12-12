@@ -429,6 +429,86 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
+   <widget class="QLabel" name="label_trem1_2">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>340</y>
+      <width>31</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel { background: rgb(255, 110, 61)}</string>
+    </property>
+    <property name="text">
+     <string>T1</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_trem2_2">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>370</y>
+      <width>31</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel { background: rgb(67, 101, 255)}</string>
+    </property>
+    <property name="text">
+     <string>T2</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_trem3_2">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>400</y>
+      <width>31</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel { background: rgb(255, 43, 47)}</string>
+    </property>
+    <property name="text">
+     <string>T3</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_trem4_2">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>430</y>
+      <width>31</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel { background: rgb(12, 131, 50)}</string>
+    </property>
+    <property name="text">
+     <string>T4</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_trem5_2">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>460</y>
+      <width>31</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel { background: rgb(255, 94, 156)}</string>
+    </property>
+    <property name="text">
+     <string>T5</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -463,5 +543,86 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>horizontalSlider_1</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_trem1_2</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>224</x>
+     <y>390</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>386</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_trem2_2</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>223</x>
+     <y>414</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>300</x>
+     <y>419</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_3</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_trem3_2</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>207</x>
+     <y>452</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>301</x>
+     <y>445</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_4</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_trem4_2</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>231</x>
+     <y>478</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>298</x>
+     <y>475</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_5</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_trem5_2</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>212</x>
+     <y>507</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>296</x>
+     <y>508</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
