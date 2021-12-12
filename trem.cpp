@@ -15,13 +15,22 @@ Trem::Trem(int ID, int x, int y){
     this->ID = ID;
     this->x = x;
     this->y = y;
-    velocidade = 50;
+    velocidade = 200;
+}
+
+void Trem::changeSpeed(int x){
+    this->velocidade = x;
 }
 
 //Função a ser executada após executar trem->START
 void Trem::run(){
     //std::cout << "valor do semaforo 0: " << regiao[0].available() << "\n";
     while(true){
+        if(velocidade == 200){
+            while(velocidade == 200){
+                msleep(1);
+            }
+        }
         switch(ID){
         case 1://Trem 1
 

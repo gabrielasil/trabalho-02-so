@@ -1,13 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <iostream>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-
 
     //Cria o trem com seu (ID, posição X, posição Y)
     trem1 = new Trem(1,60,30);
@@ -16,7 +14,6 @@ MainWindow::MainWindow(QWidget *parent) :
     trem4 = new Trem(4,190,150);
     trem5 = new Trem(5,460,150);
 
-
     /*
      * Conecta o sinal UPDATEGUI à função UPDATEINTERFACE.
      * Ou seja, sempre que o sinal UPDATEGUI foi chamado, será executada a função UPDATEINTERFACE.
@@ -24,22 +21,42 @@ MainWindow::MainWindow(QWidget *parent) :
      * Trem1 e Trem2 são os objetos que podem chamar o sinal. Se um outro objeto chamar o
      * sinal UPDATEGUI, não haverá execução da função UPDATEINTERFACE
      */
-
     connect(trem1,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
     connect(trem2,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
     connect(trem3,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
     connect(trem4,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
     connect(trem5,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
 
-
-
+    trem1->start();
+    trem2->start();
+    trem3->start();
+    trem4->start();
+    trem5->start();
 }
+
+void MainWindow::on_horizontalSlider_1_sliderReleased(){
+    trem1->changeSpeed(200 - ui->horizontalSlider_1->value());
+}
+
+void MainWindow::on_horizontalSlider_2_sliderReleased(){
+    trem2->changeSpeed(200 - ui->horizontalSlider_2->value());
+}
+
+void MainWindow::on_horizontalSlider_3_sliderReleased(){
+    trem3->changeSpeed(200 - ui->horizontalSlider_3->value());
+}
+
+void MainWindow::on_horizontalSlider_4_sliderReleased(){
+    trem4->changeSpeed(200 - ui->horizontalSlider_4->value());
+}
+
+void MainWindow::on_horizontalSlider_5_sliderReleased(){
+    trem5->changeSpeed(200 - ui->horizontalSlider_5->value());
+}
+
 
 //Função que será executada quando o sinal UPDATEGUI for emitido
 void MainWindow::updateInterface(int id, int x, int y){
-
-
-
     switch(id){
     case 1: //Atualiza a posição do objeto da tela (quadrado) que representa o trem1
         ui->label_trem1->setGeometry(x,y,21,17);
@@ -64,29 +81,4 @@ void MainWindow::updateInterface(int id, int x, int y){
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-/*
- * Ao clicar, trens começam execução
- */
-void MainWindow::on_pushButton_clicked()
-{
-
-    trem1->start();
-    trem2->start();
-    trem3->start();
-    trem4->start();
-    trem5->start();
-}
-
-/*
- * Ao clicar, trens param execução
- */
-void MainWindow::on_pushButton_2_clicked()
-{
-    trem1->terminate();
-    trem2->terminate();
-    trem3->terminate();
-    trem4->terminate();
-    trem5->terminate();
 }
