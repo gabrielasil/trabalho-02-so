@@ -154,10 +154,10 @@ void Trem::run(){
                 }
                 else x+=10;//enquanto nao chegar na regiao critica, avanca para a direita
             }
-            else if (x == 460 && y < 280){//se o Trem 4 estiver na regiao critica 7
+            else if (x == 460 && y < 270){//se o Trem 4 estiver na regiao critica 7
                 y+=10;
             }
-            else if (x > 190 && y == 280){//se o Trem 4 estiver na aresta de baixo
+            else if (x > 190 && y == 270){//se o Trem 4 estiver na aresta de baixo
                 x-=10;
             }
             else{//se o Trem 4 estiver na aresta da esquerda
@@ -183,10 +183,10 @@ void Trem::run(){
                 }
                 else x+=10;//enquanto nao chegar na regiao critica avanca para direita
             }
-            else if (x == 730 && y < 280){//se o Trem 5 estiver na aresta da direita
+            else if (x == 730 && y < 270){//se o Trem 5 estiver na aresta da direita
                 y+=10;
             }
-            else if (x > 460 && y == 280){//se o Trem 5 estiver na aresta de baixo
+            else if (x > 460 && y == 270){//se o Trem 5 estiver na aresta de baixo
                 if(x-10 == 460){//entrada na regiao critica 7, testa o mutex
                     //testa se pode avancar
                     //se puder avanca
