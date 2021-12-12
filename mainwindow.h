@@ -3,8 +3,13 @@
 
 #include <QMainWindow>
 #include "trem.h"
+#include <QSemaphore>
+
+static QSemaphore regiao[7];
+
 
 namespace Ui {
+
 class MainWindow;
 }
 
@@ -28,7 +33,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    //Cria os objetos TREM's
+
+
     Trem *trem1;
     Trem *trem2;
     Trem *trem3;

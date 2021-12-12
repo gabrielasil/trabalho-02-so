@@ -1,8 +1,17 @@
 #include "trem.h"
 #include <QtCore>
+#include "mainwindow.h"
+#include <iostream>
+
 
 //Construtor
 Trem::Trem(int ID, int x, int y){
+    if(ID ==1){
+        for(int i{0}; i<7; i++)
+            regiao[i].release(1);
+    }
+
+    std::cout <<"trem" << ID << " valor do semaforo 0: " << regiao[0].available() << "\n";
     this->ID = ID;
     this->x = x;
     this->y = y;
@@ -11,11 +20,15 @@ Trem::Trem(int ID, int x, int y){
 
 //Função a ser executada após executar trem->START
 void Trem::run(){
+    //std::cout << "valor do semaforo 0: " << regiao[0].available() << "\n";
     while(true){
         switch(ID){
         case 1://Trem 1
+
             if (y == 30 && x <330){//se o Trem 1 estivre na aresta de cima
-                if(x+10 == 330){//entrada na regiao critica 1, testa o mutex
+
+                if(x+10 == 330){//entrada na regiao critica 1, testa o mutex q
+                    regiao[0].acquire(1);//trava a regiao 1
                     //testa se pode avancar
                     //se puder entao avanca
                     x+=10;
@@ -26,6 +39,7 @@ void Trem::run(){
 
             else if (x == 330 && y < 150){//se o Trem 1 estiver na regiao critica 2
                 if(y+10 == 150){//entrada na regiao critica 3, testa o mutex
+
                     //testa se pode avancar
                     //se puder avanca
                     y+=10;
@@ -67,6 +81,7 @@ void Trem::run(){
                     //senao fica parado
                 }
                 else if(x-10 == 330){//entrando na regiao critica 1, testa o mutex
+                    regiao[0].acquire(1);//trava a regiao 1
                     //testa se pode avancar
                     //se puder avanca
                     x-=10;
@@ -189,7 +204,3 @@ void Trem::run(){
         msleep(velocidade);
     }
 }
-
-
-
-
