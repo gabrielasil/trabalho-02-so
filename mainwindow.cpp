@@ -82,4 +82,3 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-

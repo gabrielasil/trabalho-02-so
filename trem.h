@@ -3,6 +3,10 @@
 
 #include <QThread>
 
+
+
+
+
 /*
  * Classe Trem herda QThread
  * Classe Trem passa a ser uma thread.
