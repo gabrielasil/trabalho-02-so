@@ -75,7 +75,12 @@ void Trem::run(){
             break;
         case 2://Trem 2
             if (y == 30 && x <600){//se o Trem 2 estiver prestes a aresta de cima
-                if(x+10 == 590){//entrada na regiao critica 2, testa o mutex
+                if(x == 350){//saindo da regiao 1
+                    regiao[0].release(1);//libera a regiao 1
+                    x+=10;//avanca
+
+                }
+                else if(x+10 == 590){//entrada na regiao critica 2, testa o mutex
                     //testa se pode avancar
                     regiao[1].acquire(1);//trava a regiao 2
                     //se puder avanca
@@ -124,12 +129,7 @@ void Trem::run(){
 
             }
             else//se o Trem 2 estiver na regiao critica 1
-                if(y == 40){//quando chegar no final da regiao critica 1
-                    y-=10;//avanca para a cima
-                    x+=10;//avanca para a direita, sai da regiao critica 1
-                    regiao[0].release(1);//libera a regiao critica 1
-                }
-                else if(y == 140){//saindo da regiao critica 4
+                if(y == 140){//saindo da regiao critica 4
                     regiao[3].release(1);//libera a regiao 4
                     y-=10;//avanca
                 }
@@ -138,7 +138,11 @@ void Trem::run(){
             break;
         case 3: //Trem 3
             if (y == 30 && x <870){//se o Trem 3 estiver na aresta de cima
-                x+=10;
+                if(x == 620){//saindo da regiao critica 2
+                    regiao[1].release(1);//libera a regiao 2
+                    x+=10;//avanca
+                }
+                else x+=10;
             }
 
             else if (x == 870 && y < 150){//se o Trem 3 estiver na aresta da direita
@@ -166,13 +170,7 @@ void Trem::run(){
             }
 
             else{//se o Trem 3 estiver na regiao critica 2
-                if(y == 40){//saindo da regiao critica 2
-                    y-=10;//avanca para cima
-                    x+=10;//avanca para a direita, sai da regiao critica
-                    regiao[1].release(1);//libera a regiao 2
-
-                }
-                else if(y == 140){//saindo da regiao critica 6
+                if(y == 140){//saindo da regiao critica 6
                     regiao[5].release(1);//libera a regiao 6
                     y-=10;//avanca
 
@@ -234,7 +232,11 @@ void Trem::run(){
             break;
         case 5: //Trem 5
             if (y == 150 && x <730){//se o Trem 5 estiver na regiao critica 5
-                if(x == 620){//saida da regiao 5
+                if(x == 480){//saindo da regiao 7
+                    regiao[6].release(1);//libera a regiao 7
+                    x+=10;//avanca
+                }
+                else if(x == 620){//saida da regiao 5
                     regiao[4].release(1);//libera a regiao 5
                     x+=10;//avanca
 
