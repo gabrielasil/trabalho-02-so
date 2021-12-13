@@ -7,8 +7,9 @@
 //Construtor
 Trem::Trem(int ID, int x, int y){
     if(ID ==1){
-        for(int i{0}; i<7; i++)
+        for(int i{0}; i<7; i++){
             regiao[i].release(1);
+        }
     }
 
     std::cout <<"trem" << ID << " valor do semaforo 0: " << regiao[0].available() << "\n";
@@ -49,8 +50,8 @@ void Trem::run(){
             else if (x == 330 && y < 150){//se o Trem 1 estiver na regiao critica 1
 
                 if(y+10 == 140){//entrada na regiao critica 3, testa o mutex
-                    regiao[2].acquire(1);//trava a regiao 3
                     //testa se pode avancar
+                    regiao[2].acquire(1);//trava a regiao 3
                     //se puder avanca
                     y+=10;//entra na regiao critica 3
                     //se nao puder fica parado
@@ -58,7 +59,7 @@ void Trem::run(){
                 else y+=10;//enquanto nao chega na regiao critica avanca para baixo
             }
             else if (x > 60 && y == 150){//se o trem 1 estiver na regiao critica 3
-                if(x == 200){//se estiver na saida da regiao 3
+                if(x == 170){//se estiver na saida da regiao 3
                     x-=10;//sai da regiao
                     regiao[2].release(1);//libera a regiao 3
                 }
@@ -259,7 +260,7 @@ void Trem::run(){
             else if (x > 460 && y == 270){//se o Trem 5 estiver na aresta de baixo
                 if(x-10 == 470){//entrada na regiao critica 7, testa o mutex
                     //testa se pode avancar
-                    //regiao[6].acquire(1);//trava a regiao 7
+                    regiao[6].acquire(1);//trava a regiao 7
                     //se puder avanca
                     x-=10;
                     //senao fica parado
