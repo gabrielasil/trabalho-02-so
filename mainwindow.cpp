@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     trem2 = new Trem(2,460,30);
     trem3 = new Trem(3,870,90);
     trem4 = new Trem(4,330,270);
-    trem5 = new Trem(5,460,150);
+    trem5 = new Trem(5,600,270);
 
     /*
      * Conecta o sinal UPDATEGUI à função UPDATEINTERFACE.
