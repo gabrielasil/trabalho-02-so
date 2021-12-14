@@ -50,10 +50,16 @@ void Trem::run(){
             }
 
             else if (x == 330 && y < 150){//se o Trem 1 estiver na regiao critica 1
-                if(y == 50){//tenta reservar a regiao 3
+                if(y+10 == 140){//entrada na regiao 3
                     regiao[2].acquire(1);//trava a regiao 3
                     y+=10;//entra na regiao critica 3
                 }
+                /*
+                 * if(y == 50){//tenta reservar a regiao 3
+                    regiao[2].acquire(1);//trava a regiao 3
+                    y+=10;//entra na regiao critica 3
+                }
+                 * */
 
                 else y+=10;//enquanto nao chega na regiao critica avanca para baixo
             }
@@ -73,7 +79,7 @@ void Trem::run(){
             emit updateGUI(ID, x,y);    //Emite um sinal
             break;
         case 2://Trem 2
-            if (y == 30 && x <600){//se o Trem 2 estiver prestes a aresta de cima
+            if (y == 30 && x <600){//se o Trem 2 na aresta de cima
                 if(x == 350){//saindo da regiao 1
                     regiao[0].release(1);//libera a regiao 1
                     x+=10;//avanca
@@ -81,17 +87,21 @@ void Trem::run(){
                 }
                 else if(x+10 == 590){//entrada na regiao critica 2, testa o mutex
                     //testa se pode avancar
-                    regiao[1].acquire(1);//trava a regiao 2
-                    //se puder avanca
-                    x+=10;
-                    //senao puder fica parado
+                    //TESTE
+                    if(regiao[4].available() && regiao[5].available()){//so tenta entrar na regiao 2 se as regioes 5 e 6 estiverem livres
+                        regiao[1].acquire(1);//trava a regiao 2
+                        //se puder avanca
+                        x+=10;
+                        //senao puder fica parado
+                    }
+
                 }
                 else x+=10;//enquanto nao chega na regiao critica avanca para a direita
             }
             else if (x == 600 && y < 150){//se o Trem 2 estiver na regiao critica 2
                 if(y+10 == 140){//entrada na regiao critica 5, testa o mutex
                     //testa se pode avancar
-                    if(regiao[0].available() && regiao[2].available()){//so tenta entrar na 5 se a 1 e a 3 estiver livre
+                    if(regiao[3].available() && regiao[6].available()){//so tenta entrar na 5 se a 4 e a 7 estiver livre
                         regiao[4].acquire(1);//trava a regiao 5
                         //se puder avanca
                         y+=10;
@@ -107,12 +117,12 @@ void Trem::run(){
                     x-=10;//avanca
 
                 }
-                else if(x-10 == 480){//tenta travar a regiao 4
-                    if(regiao[0].available() && regiao[2].available()){//so tenta entrar na 4 se a 1 e a 3 estiverem livres
+                else if(x-10 == 470){//tenta travar a regiao 4
+                    //if(regiao[0].available() && regiao[2].available()){//so tenta entrar na 4 se a 1 e a 3 estiverem livres
                         regiao[3].acquire(1);//trava a regiao 4
                         //se puder avanca
                         x-=10;
-                    }
+                    //}
 
 
                 }
@@ -121,12 +131,14 @@ void Trem::run(){
                     x-=10;//avanca
 
                 }
+                /*
                 else if(x == 440){//tenta travar 1
                     regiao[0].acquire(1);//trava a regiao 1
                     //se puder avanca
                     x-=10;
                 }
-                /*
+                */
+
                 else if(x-10 == 340){//entrando na regiao critica 1, testa o mutex
                     //testa se pode avancar
                     regiao[0].acquire(1);//trava a regiao 1
@@ -135,7 +147,6 @@ void Trem::run(){
                     //senao fica parado
 
                 }
-                */
                 else x-=10;//enquanto nao chegar na regiao critica avanca para a esquerda
 
             }
@@ -163,10 +174,13 @@ void Trem::run(){
             else if (x > 600 && y == 150){//se o Trem 3 estiver na aresta de baixo
                 if(x-10 == 740){//entrada na regiao critica 6, testa o mutex
                     //testa se pode entrar
-                    regiao[5].acquire(1);//trava a regiao 6
-                    //se puder avanca
-                    x-=10;
-                    //senao fica parado
+                    if(regiao[4].available() && regiao[1].available()){//so tenta entrar na regiao 6 se as regioes 5 e 2 estiverem livres
+                        regiao[5].acquire(1);//trava a regiao 6
+                        //se puder avanca
+                        x-=10;
+                        //senao fica parado
+
+                    }
 
                 }
                 else if(x-10 == 610){//entrada na regiao critica 2, testa o mutex
@@ -192,10 +206,17 @@ void Trem::run(){
             break;
         case 4: //Trem 4
             if (y == 150 && x <460){//se o Trem 4 estiver na aresta de cima
+                if(x+10 == 320){//entrada na regiao 4
+                    regiao[3].acquire(1);//trava a regiao 4
+                    x+=10;//avanca
+
+                }
+                /*
                 if(x == 210){//tenta travar a regiao 4
                     regiao[3].acquire(1);//trava a regiao 4
                     x+=10;//avanca
                 }
+                */
                 else if(x == 350){//saindo da regiao critica 3
                     regiao[2].release(1);//libera a regiao 3
                     x+=10;//avanca
@@ -227,11 +248,14 @@ void Trem::run(){
             }
             else{//se o Trem 4 estiver na aresta da esquerda
                 if(y-10 == 160){//entrada na regiao critica 3, testa o mutex
-                    //testa se pode avancar
-                    regiao[2].acquire(1);//trava a regiao 3
-                    //se puder avanca
-                    y-=10;
-                    //senao fica parado
+                    if(regiao[0].available() && regiao[3].available()){//so tenta entrar na regiao 3 se as regioes 1 e 4 estiverem livres
+                        //testa se pode avancar
+                        regiao[2].acquire(1);//trava a regiao 3
+                        //se puder avanca
+                        y-=10;
+                        //senao fica parado
+                    }
+
 
                 }
                 else y-=10;//enquanto nao chegar na regiao critica avanca para cima
@@ -269,11 +293,14 @@ void Trem::run(){
             }
             else if (x > 460 && y == 270){//se o Trem 5 estiver na aresta de baixo
                 if(x-10 == 470){//entrada na regiao critica 7, testa o mutex
-                    //testa se pode avancar
-                    regiao[6].acquire(1);//trava a regiao 7
-                    //se puder avanca
-                    x-=10;
-                    //senao fica parado
+                    if(regiao[3].available() && regiao[4].available()){//so tenta entrar na regiao 7 se as regioes 4 e 5 estiverem livres
+                        //testa se pode avancar
+                        regiao[6].acquire(1);//trava a regiao 7
+                        //se puder avanca
+                        x-=10;
+                        //senao fica parado
+                    }
+
 
                 }
                 else x-=10;//enquanto nao chegar na regiao critica avanca para a esquerda
