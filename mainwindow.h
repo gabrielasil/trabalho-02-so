@@ -6,9 +6,9 @@
 
 #include <QSemaphore>
 
-static QSemaphore regiao[7];
-
-
+static QSemaphore regiao[7];//semaforos das regioes criticas
+static std::array<int, 5> estado{0, 0, 0, 0, 0};//array que guarda os estados de cada trem
+static QSemaphore mutex;//mutex para controlar a mudanca de estado
 #include <QSlider>
 #include <QAbstractSlider>
 

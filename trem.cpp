@@ -7,9 +7,12 @@
 //Construtor
 Trem::Trem(int ID, int x, int y){
     if(ID ==1){
+        //inicializa os semáforos
         for(int i{0}; i<7; i++){
             regiao[i].release(1);
         }
+        //inicializa o mutex
+        mutex.release(1);
     }
 
     this->ID = ID;
@@ -35,16 +38,21 @@ void Trem::run(){
         case 1://Trem 1
 
             if (y == 30 && x <330){//se o Trem 1 estivre na aresta de cima
-
-                if(x+10 == 320){//entrada na regiao critica 1, testa o mutex q
-                    if(regiao[2].available() && regiao[3].available()){//so tenta entra na 1 se 3 e 4 estiverem livres
+                if(x+10 == 320){//entrada na regiao critica 1
+                    while(estado[0] == 0){//enquanto o estado do Trem 1 for 0, tenta acessar o mutex e mudar o estado
+                        mutex.acquire(1);//trava o mutex para acessar o estado
+                        if(estado[3]!= 3 && estado[1]!=4){//se o trem 4 não estiver na regiao 3 e o trem 2 não estiver na regiao 4
+                            estado[0] = 1;//o trem 1 "pode" entrar na reigao 1, sem causa deadlock
+                        }
+                        mutex.release(1);//libera o mutex
+                    }
+                    if(estado[0]==1){//se o trem 1 puder entrar na regiao 1
                         regiao[0].acquire(1);//trava a regiao 1
                         //testa se pode avancar
                         //se puder entao avanca
                         x+=10;
                         //se nao puder fica parado
                     }
-
                 }
                 else x+=10;//enquanto nao chega na regiao critica avanca para a direita
             }
@@ -54,12 +62,6 @@ void Trem::run(){
                     regiao[2].acquire(1);//trava a regiao 3
                     y+=10;//entra na regiao critica 3
                 }
-                /*
-                 * if(y == 50){//tenta reservar a regiao 3
-                    regiao[2].acquire(1);//trava a regiao 3
-                    y+=10;//entra na regiao critica 3
-                }
-                 * */
 
                 else y+=10;//enquanto nao chega na regiao critica avanca para baixo
             }
@@ -69,7 +71,10 @@ void Trem::run(){
                     regiao[2].release(1);//libera a regiao 3
                 }
                 else if(x == 320){//ao entrar na regiao 3
+                    mutex.acquire(1);//trava o mutex
+                    estado[0] = 0;//muda o estado do trem 1 para 0 (saiu da regiao critica)
                     regiao[0].release(1);//libera a regiao 1
+                    mutex.release(1);//libera o mutex
                     x-=10;//avanca
                 }
                 else x-=10;
@@ -88,7 +93,7 @@ void Trem::run(){
                 else if(x+10 == 590){//entrada na regiao critica 2, testa o mutex
                     //testa se pode avancar
                     if(regiao[4].available() && regiao[5].available()){//so tenta entrar na regiao 2 se as regioes 5 e 6 estiverem livres
-                        QThread::msleep(100);
+                        //QThread::msleep(100);
                         regiao[1].acquire(1);//trava a regiao 2
                         //se puder avanca
                         x+=10;
@@ -118,27 +123,25 @@ void Trem::run(){
                     x-=10;//avanca
 
                 }
-                else if(x-10 == 470){//tenta travar a regiao 4
-                    //if(regiao[0].available() && regiao[2].available()){//so tenta entrar na 4 se a 1 e a 3 estiverem livres
-                        regiao[3].acquire(1);//trava a regiao 4
-                        //se puder avanca
-                        x-=10;
-                    //}
-
-
+                else if(x-10 == 470){//entrada na regiao 4
+                        while(estado[1] == 0){//enquanto o estado do Trem 2 for 0, tenta acessar o mutex e mudar o estado
+                            mutex.acquire(1);//trava o mutex
+                            if(estado[0] != 1 && estado[3] != 3){//se o Trem 1 não estiver na regiao 1 e o Trem 4 não estiver na regiao 3
+                                estado[1] = 4;//Trem 2 "pode" entrar na regiao 4 sem causar deadlock
+                            }
+                            mutex.release(1);//libera o mutex
+                        }
+                        if(estado[1] == 4){//se o Trem 2 puder entrar na regiao 4
+                            regiao[3].acquire(1);//trava a regiao 4
+                            //se puder avanca
+                            x-=10;
+                        }
                 }
                 else if(x == 450){//se o Trem 2 estiver na regiao 4
                     regiao[4].release(1);//libera a regiao 5
                     x-=10;//avanca
 
                 }
-                /*
-                else if(x == 440){//tenta travar 1
-                    regiao[0].acquire(1);//trava a regiao 1
-                    //se puder avanca
-                    x-=10;
-                }
-                */
 
                 else if(x-10 == 340){//entrando na regiao critica 1, testa o mutex
                     //testa se pode avancar
@@ -153,7 +156,10 @@ void Trem::run(){
             }
             else//se o Trem 2 estiver na regiao critica 1
                 if(y == 140){//saindo da regiao critica 4
+                    mutex.acquire(1);//trava o mutex
+                    estado[1] = 0;//muda o estado do Trem 2 para 0 (saiu da regiao critica)
                     regiao[3].release(1);//libera a regiao 4
+                    mutex.release(1);
                     y-=10;//avanca
                 }
                else y-=10;
@@ -212,14 +218,11 @@ void Trem::run(){
                     x+=10;//avanca
 
                 }
-                /*
-                if(x == 210){//tenta travar a regiao 4
-                    regiao[3].acquire(1);//trava a regiao 4
-                    x+=10;//avanca
-                }
-                */
                 else if(x == 350){//saindo da regiao critica 3
+                    mutex.acquire(1);//trava o mutex
+                    estado[3] = 0;//muda o estado do trem 4 (saiu da regiao critica)
                     regiao[2].release(1);//libera a regiao 3
+                    mutex.release(1);//libera o mutex
                     x+=10;//avanca
 
                 }
@@ -248,16 +251,22 @@ void Trem::run(){
                 else x-=10;
             }
             else{//se o Trem 4 estiver na aresta da esquerda
-                if(y-10 == 160){//entrada na regiao critica 3, testa o mutex
-                    if(regiao[0].available() && regiao[3].available()){//so tenta entrar na regiao 3 se as regioes 1 e 4 estiverem livres
+                if(y-10 == 160){//entrada na regiao critica 3
+                    while(estado[3] == 0){//enquanto o estado do trem 4 for 0, tenta acessar o mutex e mudar o estado
+                        mutex.acquire(1);//trava o mutex
+                        if(estado[0] != 1 && estado[1]!= 4){//se o trem 1 não estiver na regiao 1 e o trem 2 não estiver na regiao 4
+                            estado[3] = 3;//trem 4 "pode" entrar na regiao 3 sem causar deadlock
+
+                        }
+                        mutex.release(1);//libera o mutex
+                    }
+                    if(estado[3] == 3){//se o trem 4 puder entrar na regiao 3
                         //testa se pode avancar
                         regiao[2].acquire(1);//trava a regiao 3
                         //se puder avanca
                         y-=10;
                         //senao fica parado
                     }
-
-
                 }
                 else y-=10;//enquanto nao chegar na regiao critica avanca para cima
             }
