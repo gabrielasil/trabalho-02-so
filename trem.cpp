@@ -87,13 +87,14 @@ void Trem::run(){
                 }
                 else if(x+10 == 590){//entrada na regiao critica 2, testa o mutex
                     //testa se pode avancar
-                    //TESTE
                     if(regiao[4].available() && regiao[5].available()){//so tenta entrar na regiao 2 se as regioes 5 e 6 estiverem livres
+                        QThread::msleep(100);
                         regiao[1].acquire(1);//trava a regiao 2
                         //se puder avanca
                         x+=10;
                         //senao puder fica parado
                     }
+
 
                 }
                 else x+=10;//enquanto nao chega na regiao critica avanca para a direita
